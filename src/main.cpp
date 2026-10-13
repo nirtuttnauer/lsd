@@ -179,13 +179,16 @@ void parseArguments(int argc, char *argv[], fs::path &dirPath, int &maxDepth, bo
 }
 
 int main(int argc, char *argv[]) {
-    fs::path dirPath = fs::current_path();
+    fs::path dirPath;
     int maxDepth = -1;
     bool showHidden = false;
     bool verbose = false;
     bool copyClipboard = false;
 
     parseArguments(argc, argv, dirPath, maxDepth, showHidden, verbose, copyClipboard);
+    if (dirPath.empty()) {
+        dirPath = fs::current_path();
+    }
 
     std::cout << "Folder structure of: " << dirPath << std::endl;
     std::string output = getFolderStructure(dirPath, 0, maxDepth, showHidden, verbose);
